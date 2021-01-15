@@ -15,3 +15,17 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+- task: SonarCloudPrepare@1
+  displayName: 'Preparing SonarCloud'
+  inputs:
+    SonarCloud: 'TestToken'
+    organization: 'newpipelinetest123'
+    scannerMode: 'MSBuild'
+    projectKey: 'NewPipelineTest123_NewPipelineTest'
+    projectName: 'NewPipelineTest'
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
+  
